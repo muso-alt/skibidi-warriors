@@ -34,7 +34,6 @@ namespace Skibidi.Services
 
             foreach (var hit in results)
             {
-                Debug.Log(hit.name);
                 var targetView = hit.GetComponent<UnitView>();
                 
                 if (targetView == null)

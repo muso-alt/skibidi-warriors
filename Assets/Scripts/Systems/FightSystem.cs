@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Skibidi.Components.Events;
 using Leopotam.EcsLite;
@@ -12,6 +13,7 @@ namespace Skibidi.Systems
     public class FightSystem : IEcsRunSystem
     {
         private readonly EcsFilterInject<Inc<PunchEvent>> _punchEvent = "events";
+        private EcsCustomInject<TokenService> _tokenService;
 
         public void Run(IEcsSystems systems)
         {
@@ -43,7 +45,17 @@ namespace Skibidi.Systems
             attackerView.AttackAnimation();
             attackerView.LookAtTarget(targetView.transform);
             
-            await UniTask.Delay(TimeSpan.FromSeconds(duration));
+            var entity = attackerView.PackedEntityWithWorld.Id;
+
+            if (_tokenService.Value.TokensByEntity[entity] != null)
+            {
+                return;
+            }
+
+            var token = new CancellationTokenSource();
+            _tokenService.Value.TokensByEntity[entity] = token;
+            
+            await UniTask.Delay(TimeSpan.FromSeconds(duration), cancellationToken: token.Token);
 
             Attack(attackerView, targetView);
         }
@@ -53,9 +65,8 @@ namespace Skibidi.Systems
             ref var target = ref targetView.GetUnitCmpByView();
             ref var attacker = ref attackerView.GetUnitCmpByView();
             
-            Debug.Log("ATTACKER: " + attacker.View.name);
-            Debug.Log("TARGET: " + target.View.name);
-            
+            _tokenService.Value.DisposeByEntity(attacker.View.PackedEntityWithWorld.Id);
+
             target.Health -= attacker.Damage;
             target.View.HitAnimation();
         }

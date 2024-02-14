@@ -15,6 +15,7 @@ namespace Skibidi.Systems
         
         private EcsCustomInject<SceneService> _sceneService;
         private EcsCustomInject<PlayerService> _playerService;
+        private EcsCustomInject<TokenService> _tokenService;
         private UnitView _playerView;
 
         public void Init(IEcsSystems systems)
@@ -22,8 +23,9 @@ namespace Skibidi.Systems
             _playerView = _sceneService.Value.Player;
             
             InitUnit(_playerView, UnitType.Hero);
+            
             _playerService.Value.PackedEntityWithWorld = _playerView.PackedEntityWithWorld;
-            Debug.Log(_playerService.Value.PackedEntityWithWorld.Id);
+            
             InitEnemyOfFirstIteration();
             
             SendTaskStartEvent();
@@ -46,6 +48,8 @@ namespace Skibidi.Systems
 
             var unitPool = _defaultWorld.Value.GetPool<UnitCmp>();
             ref var unit = ref unitPool.Add(entity);
+            
+            _tokenService.Value.TokensByEntity.Add(entity, null);
 
             view.EcsEventWorld = _eventWorld.Value;
             view.PackedEntityWithWorld = _defaultWorld.Value.PackEntityWithWorld(entity);
@@ -59,6 +63,8 @@ namespace Skibidi.Systems
             unit.Health = view.Health;
             unit.PunchInterval = view.PunchInterval;
             unit.PunchDuration = view.PunchDuration;
+            
+            
         }
 
         private void SendTaskStartEvent()

@@ -1,10 +1,7 @@
 using Skibidi.Systems;
 using Leopotam.EcsLite;
-using Leopotam.EcsLite;
-using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.Di;
 using Skibidi.Services;
-using UnityEngine;
 using UnityEngine;
 
 public sealed class EcsStartup : MonoBehaviour
@@ -30,6 +27,7 @@ public sealed class EcsStartup : MonoBehaviour
             .AddWorld (new EcsWorld(), "events")
             .Inject(_sceneService)
             .Inject(new PlayerService())
+            .Inject(new TokenService())
             .Init();
     }
 

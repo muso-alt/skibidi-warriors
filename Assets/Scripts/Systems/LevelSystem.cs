@@ -14,6 +14,7 @@ namespace Skibidi.Systems
         private readonly EcsFilterInject<Inc<TaskEvent>> _taskFilter = "events";
         private EcsCustomInject<SceneService> _sceneService;
         private EcsPoolInject<UnitCmp> _unitCmpPool;
+        private EcsCustomInject<TokenService> _tokenService;
 
         private int _currentIndex = 0;
 
@@ -30,13 +31,18 @@ namespace Skibidi.Systems
                 
                 ref var unit = ref view.GetUnitCmpByView();
 
-                if (unit.Type == UnitType.Hero)
+                var unitId = view.PackedEntityWithWorld.Id;
+                var isHero = unit.Type == UnitType.Hero;
+                
+                _unitCmpPool.Value.Del(unitId);
+                _tokenService.Value.DisposeByEntity(unitId);
+
+                if (isHero)
                 {
                     //Game over
                     continue;
                 }
                 
-                _unitCmpPool.Value.Del(view.PackedEntityWithWorld.Id);
                 MoveOn();
             }
 
