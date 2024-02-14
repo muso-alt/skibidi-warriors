@@ -24,7 +24,7 @@ namespace Skibidi.Systems
                 SendPunchEvent();
             }
 
-            if (Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKey(KeyCode.D))
             {
                 SendDefendEvent(true);
             }

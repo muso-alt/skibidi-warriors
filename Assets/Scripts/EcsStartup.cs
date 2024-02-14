@@ -25,6 +25,7 @@ public sealed class EcsStartup : MonoBehaviour
             .Add (new AutoHitSystem())
             .Add (new BillboardSystem())
             .Add (new DefendSystem())
+            .Add (new UISystem())
             .AddWorld (new EcsWorld(), "events")
             .Inject(_sceneService)
             .Inject(new PlayerService())

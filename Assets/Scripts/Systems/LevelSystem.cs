@@ -69,6 +69,7 @@ namespace Skibidi.Systems
             }
                 
             hero.ResetLook();
+            SendPlayerMoveEvent(hero);
             
             if (_sceneService.Value.EnemyByRows.Length <= _currentIndex)
             {
@@ -76,7 +77,6 @@ namespace Skibidi.Systems
                 return;
             }
             
-            SendPlayerMoveEvent(hero);
             StartEnemyMove();
         }
 

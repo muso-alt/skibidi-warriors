@@ -30,27 +30,33 @@ namespace Skibidi.Services
 
         public static UnitView GetNearestTarget(this UnitView attackerView)
         {
-            var results = Physics.OverlapSphere(attackerView.transform.position, 10f);
+            var results = new Collider[10];
+            var size = Physics.OverlapSphereNonAlloc(attackerView.transform.position, 10f, results);
+            
+            Debug.Log(size);
 
-            foreach (var hit in results)
+            for (var index = 0; index < size; index++)
             {
-                var targetView = hit.GetComponent<UnitView>();
+                var hit = results[index];
                 
+                Debug.Log(hit.name);
+                var targetView = hit.GetComponent<UnitView>();
+
                 if (targetView == null)
                 {
                     continue;
                 }
-                
+
                 ref var target = ref targetView.GetUnitCmpByView();
                 ref var attacker = ref attackerView.GetUnitCmpByView();
-                
+
                 //In case if allies attacked each other. Maybe i'll think of something better
                 if (target.Type == UnitType.Enemy && attacker.Type == UnitType.Enemy
                     || target.Type == UnitType.Hero && attacker.Type == UnitType.Hero)
                 {
                     continue;
                 }
-                
+
                 return targetView;
             }
 

@@ -4,7 +4,6 @@ using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Skibidi.Services;
 using Skibidi.Views;
-using Unity.VisualScripting;
 
 namespace Skibidi.Systems
 {
@@ -12,6 +11,7 @@ namespace Skibidi.Systems
     {
         private readonly EcsWorldInject _eventWorld = "events";
         private readonly EcsWorldInject _defaultWorld = default;
+        private readonly EcsFilterInject<Inc<GameStartEvent>> _gameStartFilter = "events";
         
         private EcsCustomInject<SceneService> _sceneService;
         private EcsCustomInject<PlayerService> _playerService;
@@ -24,6 +24,16 @@ namespace Skibidi.Systems
         {
             StartGame();
         }
+        
+        /*public void Run(IEcsSystems systems)
+        {
+            foreach (var entity in _gameStartFilter.Value)
+            {
+                var pool = _gameStartFilter.Pools.Inc1;
+                pool.Del(entity);
+                StartGame();
+            }
+        }*/
 
         private void StartGame()
         {
@@ -48,36 +58,26 @@ namespace Skibidi.Systems
             {
                 foreach (var unit in row.Units)
                 {
-                    var pew = unit.PackedEntityWithWorld;
-
                     unit.Restore();
                     
-                    if (unit.PackedEntityWithWorld.World == null)
-                    {
-                        continue;
-                    }
-
-                    if (_unitCmpPool.Value.Has(pew.Id))
-                    {
-                        _unitCmpPool.Value.Del(pew.Id);
-                    }
-
+                    RemoveEntity(unit.PackedEntityWithWorld);
                 }
             }
 
             var player = _sceneService.Value.Player;
             
             player.Restore();
-            
-            if (player.PackedEntityWithWorld.World == null)
+            RemoveEntity(player.PackedEntityWithWorld);
+        }
+
+        private void RemoveEntity(EcsPackedEntityWithWorld pew)
+        {
+            if (!pew.Unpack(out var world, out var entity))
             {
                 return;
             }
-            
-            if (_unitCmpPool.Value.Has(player.PackedEntityWithWorld.Id))
-            {
-                _unitCmpPool.Value.Del(player.PackedEntityWithWorld.Id);
-            }
+
+            world.DelEntity(entity);
         }
 
         private void InitEnemyOfFirstIteration()

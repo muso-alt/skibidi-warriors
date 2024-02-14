@@ -8,6 +8,7 @@ namespace Skibidi.Services
     public class SceneService : MonoBehaviour
     {
         [SerializeField] private UnitView _player;
+        [SerializeField] private GamePopupView _popupView;
         [SerializeField] private Camera _mainCamera;
         [SerializeField] private EnemyByRow[] _enemyByRows;
         
@@ -15,6 +16,7 @@ namespace Skibidi.Services
         public EnemyByRow[] EnemyByRows => _enemyByRows;
 
         public Camera MainCamera => _mainCamera;
+        public GamePopupView PopupView => _popupView;
     }
 
     [Serializable]
