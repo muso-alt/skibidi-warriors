@@ -2,9 +2,8 @@
 
 namespace Skibidi.Components.Events
 {
-    public struct PunchEvent : ITimerComponent
+    public struct PunchEvent 
     {
         public UnitView View;
-        public float Time { get; }
     }
 }

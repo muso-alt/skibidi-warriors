@@ -18,6 +18,16 @@ namespace Skibidi.Services
             return ref unitPool.Get(targetEntity);
         }
 
+        public static bool IsAllowToPunch(this ref UnitCmp unit)
+        {
+            if (unit.IsMoving)
+            {
+                return false;
+            }
+            
+            return !(Time.time - unit.LastPunch < unit.PunchInterval);
+        }
+
         public static UnitView GetNearestTarget(this UnitView attackerView)
         {
             var results = Physics.OverlapSphere(attackerView.transform.position, 10f);

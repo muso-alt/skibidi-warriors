@@ -3,6 +3,7 @@ using Skibidi.Components.Events;
 using FluffyUnderware.Curvy.Controllers;
 using Leopotam.EcsLite;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Skibidi.Views
 {
@@ -12,7 +13,7 @@ namespace Skibidi.Views
         [SerializeField] private Animator _animator;
         [SerializeField] private Collider _collider;
         [SerializeField] private Transform _modelTransform;
-        [SerializeField] private Rigidbody _physicBody;
+        [SerializeField] private Slider _healthSlider;
 
         [SerializeField] private float _speed = 6;
         [SerializeField] private float _punchInterval = 2f;
@@ -40,6 +41,22 @@ namespace Skibidi.Views
             _splineController.Speed = speed;
         }
 
+        public void SetHealthValue(int value)
+        {
+            _healthSlider.maxValue = value;
+            _healthSlider.value = value;
+        }
+
+        public void ChangeHealthValue(int newValue)
+        {
+            _healthSlider.value = newValue;
+        }
+
+        public void UpdateSliderBillboard(Vector3 camPosition)
+        {
+            _healthSlider.transform.LookAt(_healthSlider.transform.position + camPosition);
+        }
+
         public void ControlPointReached(CurvySplineMoveEventArgs args)
         {
             var entity = EcsEventWorld.NewEntity();
@@ -53,11 +70,6 @@ namespace Skibidi.Views
             _collider.enabled = false;
         }
 
-        public void ForceBack(float strength)
-        {
-            _physicBody.AddForce(Vector3.back * strength, ForceMode.Force);
-        }
-        
         public void AttackAnimation()
         {
             _animator.SetTrigger(Attack);

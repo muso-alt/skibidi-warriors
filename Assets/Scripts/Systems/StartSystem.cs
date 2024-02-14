@@ -8,7 +8,7 @@ using Skibidi.Views;
 
 namespace Skibidi.Systems
 {
-    public class StartSystem : IEcsInitSystem, IEcsRunSystem
+    public class StartSystem : IEcsInitSystem
     {
         private readonly EcsWorldInject _eventWorld = "events";
         private readonly EcsWorldInject _defaultWorld = default;
@@ -49,6 +49,7 @@ namespace Skibidi.Systems
 
             view.EcsEventWorld = _eventWorld.Value;
             view.PackedEntityWithWorld = _defaultWorld.Value.PackEntityWithWorld(entity);
+            view.SetHealthValue(view.Health);
             
             unit.View = view;
             unit.Type = unitType;
@@ -58,16 +59,6 @@ namespace Skibidi.Systems
             unit.Health = view.Health;
             unit.PunchInterval = view.PunchInterval;
             unit.PunchDuration = view.PunchDuration;
-        }
-
-        public void Run(IEcsSystems systems)
-        {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                var entity = _eventWorld.Value.NewEntity();
-                ref var eventComponent = ref _eventWorld.Value.GetPool<PunchEvent>().Add(entity);
-                eventComponent.View = _playerView;
-            }
         }
 
         private void SendTaskStartEvent()

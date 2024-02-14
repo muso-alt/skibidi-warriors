@@ -12,7 +12,6 @@ namespace Skibidi.Systems
         private readonly EcsWorldInject _eventWorld = "events";
         private readonly EcsFilterInject<Inc<DieEvent>> _dieFilter = "events";
         private readonly EcsFilterInject<Inc<TaskEvent>> _taskFilter = "events";
-        private EcsCustomInject<PlayerService> _playerService;
         private EcsCustomInject<SceneService> _sceneService;
         private EcsPoolInject<UnitCmp> _unitCmpPool;
 

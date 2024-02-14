@@ -1408,6 +1408,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1203431586507105505, guid: a882a35d6d65dd34ca43d1cddc8d3641, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2943033795972478866, guid: a882a35d6d65dd34ca43d1cddc8d3641, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966379436192856378, guid: a882a35d6d65dd34ca43d1cddc8d3641, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966379436192856378, guid: a882a35d6d65dd34ca43d1cddc8d3641, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5068714387807729908, guid: a882a35d6d65dd34ca43d1cddc8d3641, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -1459,6 +1475,10 @@ PrefabInstance:
     - target: {fileID: 5068714387807729915, guid: a882a35d6d65dd34ca43d1cddc8d3641, type: 3}
       propertyPath: m_Name
       value: SkibidiToiletArt
+      objectReference: {fileID: 0}
+    - target: {fileID: 8196721566539505902, guid: a882a35d6d65dd34ca43d1cddc8d3641, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a882a35d6d65dd34ca43d1cddc8d3641, type: 3}
@@ -1704,6 +1724,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1203431586507105505, guid: 01c36ccce18e4d346a3fefa8c4e8a063, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2943033795972478866, guid: 01c36ccce18e4d346a3fefa8c4e8a063, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966379436192856378, guid: 01c36ccce18e4d346a3fefa8c4e8a063, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966379436192856378, guid: 01c36ccce18e4d346a3fefa8c4e8a063, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5068714387807729908, guid: 01c36ccce18e4d346a3fefa8c4e8a063, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -1755,6 +1791,10 @@ PrefabInstance:
     - target: {fileID: 5068714387807729915, guid: 01c36ccce18e4d346a3fefa8c4e8a063, type: 3}
       propertyPath: m_Name
       value: GMan
+      objectReference: {fileID: 0}
+    - target: {fileID: 8196721566539505902, guid: 01c36ccce18e4d346a3fefa8c4e8a063, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01c36ccce18e4d346a3fefa8c4e8a063, type: 3}
@@ -2566,6 +2606,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1203431586507105505, guid: 9c1bf5d22e548dd48ac6c16f458fd2e7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2943033795972478866, guid: 9c1bf5d22e548dd48ac6c16f458fd2e7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966379436192856378, guid: 9c1bf5d22e548dd48ac6c16f458fd2e7, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966379436192856378, guid: 9c1bf5d22e548dd48ac6c16f458fd2e7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5068714387807729908, guid: 9c1bf5d22e548dd48ac6c16f458fd2e7, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -2617,6 +2673,10 @@ PrefabInstance:
     - target: {fileID: 5068714387807729915, guid: 9c1bf5d22e548dd48ac6c16f458fd2e7, type: 3}
       propertyPath: m_Name
       value: SkibidiToiletEric
+      objectReference: {fileID: 0}
+    - target: {fileID: 8196721566539505902, guid: 9c1bf5d22e548dd48ac6c16f458fd2e7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c1bf5d22e548dd48ac6c16f458fd2e7, type: 3}
@@ -3417,6 +3477,14 @@ PrefabInstance:
     - target: {fileID: 9088764827720007898, guid: 379806ac9de1b324e9849ab6fbfb46e3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -2.1539493
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140185139487701636, guid: 379806ac9de1b324e9849ab6fbfb46e3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140185139487701636, guid: 379806ac9de1b324e9849ab6fbfb46e3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9140699845467397726, guid: 379806ac9de1b324e9849ab6fbfb46e3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

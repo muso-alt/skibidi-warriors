@@ -25,20 +25,7 @@ namespace Skibidi.Systems
                 pool.Del(entity);
 
                 ref var unit = ref view.GetUnitCmpByView();
-
-                if (unit.IsMoving)
-                {
-                    continue;
-                }
                 
-                if (Time.time - unit.LastPunch < unit.PunchInterval)
-                {
-                    continue;
-                }
-
-                unit.LastPunch = Time.time;
-                
-                view.AttackAnimation();
                 TryAttackAsync(view, unit.PunchDuration).Forget();
             }
         }
@@ -52,7 +39,7 @@ namespace Skibidi.Systems
                 attackerView.ResetLook();
                 return;
             }
-            
+
             attackerView.AttackAnimation();
             attackerView.LookAtTarget(targetView.transform);
             

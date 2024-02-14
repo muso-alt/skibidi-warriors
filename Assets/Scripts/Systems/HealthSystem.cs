@@ -17,6 +17,7 @@ namespace Skibidi.Systems
             foreach (var entity in _unitCmpFilter.Value)
             {
                 var unitCmp = _unitCmpPool.Value.Get(entity);
+                unitCmp.View.ChangeHealthValue(unitCmp.Health);
                 
                 if (unitCmp.Health > 0)
                 {
