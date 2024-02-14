@@ -4,8 +4,8 @@ using Cysharp.Threading.Tasks;
 using Skibidi.Components.Events;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using Skibidi.Components;
 using Skibidi.Services;
-using UnityEngine;
 using Skibidi.Views;
 
 namespace Skibidi.Systems
@@ -42,6 +42,7 @@ namespace Skibidi.Systems
                 return;
             }
 
+            ToggleUnitState(attackerView, UnitState.Fighting);
             attackerView.AttackAnimation();
             attackerView.LookAtTarget(targetView.transform);
             
@@ -54,7 +55,7 @@ namespace Skibidi.Systems
 
             var token = new CancellationTokenSource();
             _tokenService.Value.TokensByEntity[entity] = token;
-            
+
             await UniTask.Delay(TimeSpan.FromSeconds(duration), cancellationToken: token.Token);
 
             Attack(attackerView, targetView);
@@ -67,8 +68,19 @@ namespace Skibidi.Systems
             
             _tokenService.Value.DisposeByEntity(attacker.View.PackedEntityWithWorld.Id);
 
-            target.Health -= attacker.Damage;
-            target.View.HitAnimation();
+            if(target.State != UnitState.Defending)
+            {
+                target.Health -= attacker.Damage;
+                target.View.HitAnimation();
+            }
+            
+            ToggleUnitState(attackerView, UnitState.Idle);
+        }
+
+        private void ToggleUnitState(UnitView view, UnitState state)
+        {
+            ref var unit = ref view.GetUnitCmpByView();
+            unit.State = state;
         }
     }
 }

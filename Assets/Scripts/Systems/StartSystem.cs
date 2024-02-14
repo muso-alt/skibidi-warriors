@@ -3,8 +3,8 @@ using Skibidi.Components.Events;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Skibidi.Services;
-using UnityEngine;
 using Skibidi.Views;
+using Unity.VisualScripting;
 
 namespace Skibidi.Systems
 {
@@ -16,10 +16,21 @@ namespace Skibidi.Systems
         private EcsCustomInject<SceneService> _sceneService;
         private EcsCustomInject<PlayerService> _playerService;
         private EcsCustomInject<TokenService> _tokenService;
+        
+        private EcsPoolInject<UnitCmp> _unitCmpPool;
         private UnitView _playerView;
 
         public void Init(IEcsSystems systems)
         {
+            StartGame();
+        }
+
+        private void StartGame()
+        {
+            Restore();
+
+            _playerService.Value.GameOver = false;
+            
             _playerView = _sceneService.Value.Player;
             
             InitUnit(_playerView, UnitType.Hero);
@@ -29,6 +40,44 @@ namespace Skibidi.Systems
             InitEnemyOfFirstIteration();
             
             SendTaskStartEvent();
+        }
+
+        private void Restore()
+        {
+            foreach (var row in _sceneService.Value.EnemyByRows)
+            {
+                foreach (var unit in row.Units)
+                {
+                    var pew = unit.PackedEntityWithWorld;
+
+                    unit.Restore();
+                    
+                    if (unit.PackedEntityWithWorld.World == null)
+                    {
+                        continue;
+                    }
+
+                    if (_unitCmpPool.Value.Has(pew.Id))
+                    {
+                        _unitCmpPool.Value.Del(pew.Id);
+                    }
+
+                }
+            }
+
+            var player = _sceneService.Value.Player;
+            
+            player.Restore();
+            
+            if (player.PackedEntityWithWorld.World == null)
+            {
+                return;
+            }
+            
+            if (_unitCmpPool.Value.Has(player.PackedEntityWithWorld.Id))
+            {
+                _unitCmpPool.Value.Del(player.PackedEntityWithWorld.Id);
+            }
         }
 
         private void InitEnemyOfFirstIteration()
@@ -63,8 +112,6 @@ namespace Skibidi.Systems
             unit.Health = view.Health;
             unit.PunchInterval = view.PunchInterval;
             unit.PunchDuration = view.PunchDuration;
-            
-            
         }
 
         private void SendTaskStartEvent()

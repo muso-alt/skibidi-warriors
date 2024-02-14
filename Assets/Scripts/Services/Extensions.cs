@@ -20,7 +20,7 @@ namespace Skibidi.Services
 
         public static bool IsAllowToPunch(this ref UnitCmp unit)
         {
-            if (unit.IsMoving)
+            if (unit.State == UnitState.Moving)
             {
                 return false;
             }

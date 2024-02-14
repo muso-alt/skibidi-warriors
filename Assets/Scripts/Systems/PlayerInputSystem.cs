@@ -14,23 +14,29 @@ namespace Skibidi.Systems
         
         public void Run(IEcsSystems systems)
         {
+            if (_playerService.Value.GameOver)
+            {
+                return;
+            } 
+            
             if (Input.GetKeyDown(KeyCode.A))
             {
                 SendPunchEvent();
+            }
+
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                SendDefendEvent(true);
+            }
+            else if (Input.GetKeyUp(KeyCode.D))
+            {
+                SendDefendEvent(false);
             }
         }
         
         private void SendPunchEvent()
         {
-            var player = _playerService.Value.PackedEntityWithWorld;
-
-            if (!player.Unpack(out var world, out var playerEntity))
-            {
-                return;
-            }
-
-            var pool = world.GetPool<UnitCmp>();
-            ref var unit = ref pool.Get(playerEntity);
+            ref var unit = ref GetPlayerUnit();
             
             if (!unit.IsAllowToPunch())
             {
@@ -42,6 +48,29 @@ namespace Skibidi.Systems
             var entity = _eventWorld.Value.NewEntity();
             ref var eventComponent = ref _eventWorld.Value.GetPool<PunchEvent>().Add(entity);
             eventComponent.View = unit.View;
+        }
+
+        private void SendDefendEvent(bool toggleValue)
+        {
+            ref var unit = ref GetPlayerUnit();
+            
+            var entity = _eventWorld.Value.NewEntity();
+            ref var eventComponent = ref _eventWorld.Value.GetPool<DefendEvent>().Add(entity);
+            eventComponent.View = unit.View;
+            eventComponent.IsActive = toggleValue;
+        }
+
+        private ref UnitCmp GetPlayerUnit()
+        {
+            var player = _playerService.Value.PackedEntityWithWorld;
+
+            if (!player.Unpack(out var world, out var playerEntity))
+            {
+                throw new System.NullReferenceException();
+            }
+
+            var pool = world.GetPool<UnitCmp>();
+            return ref pool.Get(playerEntity);
         }
     }
 }

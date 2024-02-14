@@ -26,6 +26,7 @@ namespace Skibidi.Views
         private static readonly int Attack = Animator.StringToHash("Attack");
         private static readonly int Die = Animator.StringToHash("Die");
         private static readonly int Hit = Animator.StringToHash("Hit");
+        private static readonly int Defend1 = Animator.StringToHash("Defend");
 
         public EcsPackedEntityWithWorld PackedEntityWithWorld { get; set; }
         public EcsWorld EcsEventWorld { get; set; }
@@ -98,6 +99,17 @@ namespace Skibidi.Views
         public void ResetLook()
         {
             _modelTransform.DOLocalRotate(Vector3.zero, _lookRotation);
+        }
+
+        public void Defend(bool active)
+        {
+            _animator.SetBool(Defend1, active);
+        }
+
+        public void Restore()
+        {
+            _splineController.Position = 0f;
+            _splineController.Speed = 0;
         }
     }
 }

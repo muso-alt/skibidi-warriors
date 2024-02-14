@@ -4,8 +4,7 @@ namespace Skibidi.Components
 {
     public struct UnitCmp
     {
-        public bool IsMoving;
-        
+        public UnitState State;
         public UnitType Type;
         public UnitView View;
         

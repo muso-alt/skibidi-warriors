@@ -1,6 +1,7 @@
 ﻿using Skibidi.Components.Events;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using Skibidi.Components;
 using Skibidi.Services;
 using Skibidi.Views;
 
@@ -34,7 +35,7 @@ namespace Skibidi.Systems
             
                 unit.View.SetSpeed(speed);
                 unit.View.ToggleWalkState(state);
-                unit.IsMoving = state;
+                unit.State = state ? UnitState.Moving : UnitState.Idle;
             }
         }
 

@@ -13,6 +13,7 @@ namespace Skibidi.Systems
         private readonly EcsFilterInject<Inc<DieEvent>> _dieFilter = "events";
         private readonly EcsFilterInject<Inc<TaskEvent>> _taskFilter = "events";
         private EcsCustomInject<SceneService> _sceneService;
+        private EcsCustomInject<PlayerService> _playerService;
         private EcsPoolInject<UnitCmp> _unitCmpPool;
         private EcsCustomInject<TokenService> _tokenService;
 
@@ -39,7 +40,7 @@ namespace Skibidi.Systems
 
                 if (isHero)
                 {
-                    //Game over
+                    SendGameOverEvent(false);
                     continue;
                 }
                 
@@ -71,7 +72,7 @@ namespace Skibidi.Systems
             
             if (_sceneService.Value.EnemyByRows.Length <= _currentIndex)
             {
-                //Game over
+                SendGameOverEvent(true);
                 return;
             }
             
@@ -98,6 +99,15 @@ namespace Skibidi.Systems
             }
 
             _currentIndex++;
+        }
+
+        private void SendGameOverEvent(bool isWin)
+        {
+            _playerService.Value.GameOver = true;
+            
+            var entity = _eventWorld.Value.NewEntity();
+            ref var eventComponent = ref _eventWorld.Value.GetPool<GameEndEvent>().Add(entity);
+            eventComponent.IsWin = isWin;
         }
     }
 }
