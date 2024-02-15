@@ -1,16 +1,30 @@
-﻿using Leopotam.EcsLite;
+﻿using System;
+using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Skibidi.Components;
 using Skibidi.Components.Events;
 using Skibidi.Services;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Skibidi.Systems
 {
-    public class PlayerInputSystem : IEcsRunSystem
+    public class PlayerInputSystem : IEcsInitSystem, IEcsRunSystem
     {
         private readonly EcsWorldInject _eventWorld = "events";
         private EcsCustomInject<PlayerService> _playerService;
+        private EcsCustomInject<SceneService> _sceneService;
+
+        private bool IsDefending;
+        
+        public void Init(IEcsSystems systems)
+        {
+            var attackView = _sceneService.Value.AttackView;
+            var defendView = _sceneService.Value.DefendView;
+
+            attackView.OnClicked += SendPunchEvent;
+            defendView.PointerDown += ToggleDefendState;
+        }
         
         public void Run(IEcsSystems systems)
         {
@@ -24,7 +38,7 @@ namespace Skibidi.Systems
                 SendPunchEvent();
             }
 
-            if (Input.GetKey(KeyCode.D))
+            if (Input.GetKey(KeyCode.D) || IsDefending)
             {
                 SendDefendEvent(true);
             }
@@ -32,6 +46,12 @@ namespace Skibidi.Systems
             {
                 SendDefendEvent(false);
             }
+        }
+
+        private void ToggleDefendState(bool state)
+        {
+            IsDefending = state;
+            SendDefendEvent(state);
         }
         
         private void SendPunchEvent()
